@@ -1,20 +1,12 @@
 name: Build Binaries
-on:
+on:  
   push:
-    branches: [ master ]
-    paths-ignore:
-    - .devcontainer/**
-    - .github/**
-    - Bootloader/**
-    - Copy to SD Card root directory to update/**
-    - images/**
-    - readme/**
-    - '**/*.md'
+    tags:
+      - '*'
 
 jobs:
   main:
     name: Build Binaries
-    if: github.repository == 'bigtreetech/BIGTREETECH-TouchScreenFirmware'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -114,30 +106,17 @@ jobs:
       - name: Build MKS TFT35 V1.0
         run: platformio run --environment MKS_TFT35_V1_0
 
-      - name: Remove Old Binaries
-        run: find "Copy to SD Card root directory to update/" -name '*.bin' -print -delete
-
-      - name: Remove Old Config
-        run: find "Copy to SD Card root directory to update/" -name 'config*.ini' -print -delete
+      - name: Make release dir
+        run: mkdir release
 
       - name: Copy New Binaries
-        run: find .pio/build/ -name '*.bin' -exec cp -vf '{}' "./Copy to SD Card root directory to update/" ";"
+        run: find .pio/build/ -name '*.bin' -exec cp -vf '{}' "./release/" ";"
 
       - name: Copy New Config
-        run: find TFT/src/User/ -name 'config*.ini' -exec cp -vf '{}' "./Copy to SD Card root directory to update/" ";"
+        run: find TFT/src/User/ -name 'config*.ini' -exec cp -vf '{}' "./release/" ";"
 
-      - name: Stage New Binaries
-        run: |
-          find "Copy to SD Card root directory to update/" -name '*.bin' -exec git add {} \;
-
-      - name: Stage New Config
-        run: |
-          find "Copy to SD Card root directory to update/" -name 'config*.ini' -exec git add {} \;
-
-      - name: Push
-        uses: actions-x/commit@v6
+      - name: Create release
+        uses: ncipollo/release-action@v1
         with:
-          email: 38851044+bigtreetech@users.noreply.github.com
-          name: bigtreetech
-          message: 📦️ Update prebuilt binaries and config
-          token: ${{ secrets.MY_SECRET_TOKEN }}
+          artifacts: "release/*"
+
