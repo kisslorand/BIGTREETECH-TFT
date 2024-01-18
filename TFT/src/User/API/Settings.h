@@ -14,7 +14,7 @@ extern "C" {
 // Config version support (format YYYYMMDD)
 // change if new elements/keywords are added/removed/changed in the Configuration.h
 // this number should match CONFIG_VERSION in Configuration.h
-#define CONFIG_SUPPPORT 20230929
+#define CONFIG_SUPPPORT 20231119
 
 #define FONT_FLASH_SIGN       20230821  // (YYYYMMDD) change if fonts require updating
 #define CONFIG_FLASH_SIGN     20230929  // (YYYYMMDD) change if any keyword(s) in config.ini is added or removed
@@ -34,8 +34,8 @@ extern "C" {
 #define MAX_HEATER_COUNT      (MAX_HOTEND_COUNT + 2)  // hotends + bed + chamber
 #define MAX_HEATER_PID_COUNT  (MAX_HOTEND_COUNT + 1)  // hotends + bed
 #define MAX_COOLING_FAN_COUNT 6
-#define MAX_CRTL_FAN_COUNT    2
-#define MAX_FAN_COUNT         (MAX_COOLING_FAN_COUNT + MAX_CRTL_FAN_COUNT)
+#define MAX_CTRL_FAN_COUNT    2
+#define MAX_FAN_COUNT         (MAX_COOLING_FAN_COUNT + MAX_CTRL_FAN_COUNT)
 
 #define AXIS_NUM              (TOTAL_AXIS - 1)
 #define SPEED_COUNT            3

@@ -1,7 +1,7 @@
 #ifndef _CONFIGURATION_H_
 #define _CONFIGURATION_H_
 
-#define CONFIG_VERSION 20230929
+#define CONFIG_VERSION 20231119
 
 //====================================================================================================
 //=============================== Settings Configurable On config.ini ================================
@@ -694,15 +694,15 @@
  * is moved to the XY probing point.
  * If disabled, after homing the nozzle is moved directly to the XY homing point. This is useful
  * in case Marlin firmware is configured to use the probe for Z axis homing (e.g.
- * USE_PROBE_FOR_Z_HOMING enabled in Marlin firmware) to avoid a second probing after homing.
+ * "USE_PROBE_FOR_Z_HOMING" enabled in Marlin firmware) to avoid a second probing after homing.
  *
  * NOTES:
  *   - Enable it in case Marlin firmware is not configured to use the probe for Z axis homing
- *     (e.g. USE_PROBE_FOR_Z_HOMING disabled in Marlin firmware) or the XY probing point set
+ *     (e.g. "USE_PROBE_FOR_Z_HOMING" disabled in Marlin firmware) or the XY probing point set
  *     for homing is not reachable by the nozzle (e.g. due to HW limitations/constraints or
  *     printer specific configuration).
  *   - Disable it (preferably) in case Marlin firmware is configured to use the probe for Z axis
- *     homing (e.g. USE_PROBE_FOR_Z_HOMING enabled in Marlin firmware).
+ *     homing (e.g. "USE_PROBE_FOR_Z_HOMING" enabled in Marlin firmware).
  *
  *   Options: [disable: 0, enable: 1]
  */
@@ -732,7 +732,7 @@
  *
  *   Options: [disable: 0, enable: 1]
  */
-#define Z_STEPPER_ALIGNEMENT 0  // Default: 0
+#define Z_STEPPERS_ALIGNMENT 0  // Default: 0
 
 /**
  * TouchMI Settings (ABL)
@@ -1117,7 +1117,7 @@
  * Monitoring Debug
  * Uncomment/Enable to monitor/show system resources usage in Monitoring menu.
  */
-#define DEBUG_MONITORING  // Default: commented (disabled)
+#define DEBUG_MONITORING  // Default: uncommented (enabled)
 
 /**
  * Generic Debug
@@ -1431,7 +1431,7 @@
  * Uncomment to enable a progress bar with 10% markers.
  * Comment to enable a standard progress bar.
  */
-#define MARKED_PROGRESS_BAR  // Default: commented (disabled)
+//#define MARKED_PROGRESS_BAR  // Default: commented (disabled)
 
 /**
  * Live Text Common Color Layout (Status Screen menu)
