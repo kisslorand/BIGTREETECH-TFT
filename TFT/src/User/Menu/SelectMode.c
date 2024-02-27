@@ -59,18 +59,20 @@ void drawSelectedMode(int8_t nowMode)
 void menuMode(void)
 {
   int8_t nowMode = GET_BIT(infoSettings.mode, 0);
-  TSC_ReDrawIcon = NULL;  // disable icon redraw callback function
+  TS_ReDrawIcon = NULL;  // disable icon redraw callback function
 
   GUI_Clear(infoSettings.bg_color);
   drawModeIcon();
   drawSelectedMode(nowMode);
 
   #if LCD_ENCODER_SUPPORT
-    while (!XPT2046_Read_Pen() || LCD_Enc_ReadBtn(LCD_ENC_BUTTON_INTERVAL))
-      ;  // wait for button release
+    while (!XPT2046_Read_Pen() || LCD_Enc_ReadBtn(LCD_ENC_BUTTON_INTERVAL))  // wait for button release
+    {
+    }
   #else
-    while (!XPT2046_Read_Pen())
-      ;  // wait for touch release
+    while (!XPT2046_Read_Pen())  // wait for touch release
+    {
+    }
   #endif
 
   while (MENU_IS(menuMode))

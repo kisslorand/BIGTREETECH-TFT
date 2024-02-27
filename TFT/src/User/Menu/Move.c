@@ -1,14 +1,16 @@
 #include "Move.h"
 #include "includes.h"
 
-#define LOAD_XYZ_LABEL_INDEX(p0, dir0, p1, dir1, axis) do { \
-                                                         moveItems.items[p0].label.index = LABEL_##axis##_##dir0; \
-                                                         moveItems.items[p1].label.index = LABEL_##axis##_##dir1; \
-                                                       } while(0)
-#define X_MOVE_GCODE "G1 X%.2f F%d\n"
-#define Y_MOVE_GCODE "G1 Y%.2f F%d\n"
-#define Z_MOVE_GCODE "G1 Z%.2f F%d\n"
-#define GANTRY_UPDATE_DELAY 500  // 1 seconds is 1000
+#define LOAD_XYZ_LABEL_INDEX(p0, dir0, p1, dir1, axis)       \
+  do {                                                       \
+    moveItems.items[p0].label.index = LABEL_##axis##_##dir0; \
+    moveItems.items[p1].label.index = LABEL_##axis##_##dir1; \
+  } while (0)
+
+#define X_MOVE_GCODE        "G0 X%.2f F%d\n"  // X axis gcode
+#define Y_MOVE_GCODE        "G0 Y%.2f F%d\n"  // Y axis gcode
+#define Z_MOVE_GCODE        "G0 Z%.2f F%d\n"  // Z axis gcode
+#define GANTRY_REFRESH_TIME 500               // 1 seconds is 1000
 
 #ifdef PORTRAIT_MODE
   #define OFFSET 0
@@ -24,7 +26,7 @@ void storeMoveCmd(const AXIS xyz, const float amount)
 {
   // if invert is true, use 'amount' multiplied by -1
   storeCmd(xyzMoveCmd[xyz], GET_BIT(infoSettings.inverted_axis, xyz) ? -amount : amount,
-           ((xyz != Z_AXIS) ? infoSettings.xy_speed[infoSettings.move_speed] : infoSettings.z_speed[infoSettings.move_speed]));
+           xyz != Z_AXIS ? infoSettings.xy_speed[infoSettings.move_speed] : infoSettings.z_speed[infoSettings.move_speed]);
 
   nowAxis = xyz;  // update now axis
 }
@@ -51,7 +53,7 @@ void drawXYZ(void)
 
 static inline void updateGantry(void)
 {
-  if (nextScreenUpdate(GANTRY_UPDATE_DELAY))
+  if (nextScreenUpdate(GANTRY_REFRESH_TIME))
   {
     coordinateQuery(0);  // query position manually for delay less than 1 second
     drawXYZ();
@@ -103,7 +105,7 @@ void menuMove(void)
        | X-(4) | Y+(5) | X+(6) | back(7) |
        *-------*-------*-------*---------*
        |X+ X-  |Y+ Y-  |Z+ Z-            */
-      {{6, 4}, {5, 1}, {2, 0}}
+      {{6, 4}, {5, 1}, {2, 0}};
     #else
       /*-------*-------*-------*---------*
        | X+(0) | Y+(1) | Z+(2) | unit(3) |
@@ -111,9 +113,8 @@ void menuMove(void)
        | X-(4) | Y-(5) | Z-(6) | back(7) |
        *-------*-------*-------*---------*
        |X+ X-  |Y+ Y-  |Z+ Z-            */
-      {{0, 4}, {1, 5}, {2, 6}}
+      {{0, 4}, {1, 5}, {2, 6}};
     #endif
-    ;
 
   if (!GET_BIT(infoSettings.inverted_axis, X_AXIS))
     LOAD_XYZ_LABEL_INDEX(table[X_AXIS][0], INC, table[X_AXIS][1], DEC, X);  // table[0] <--> INC(+) table[1] <--> DEC(+) if not inverted

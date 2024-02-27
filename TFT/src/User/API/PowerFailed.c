@@ -44,7 +44,7 @@ void powerFailedSetDriverSource(void)
 
 bool powerFailedLoad(FIL *print_fp)
 {
-  // set status flag status first
+  // set status flag first
   load_ok = false;
   restore_ok = false;
 
@@ -203,9 +203,7 @@ void powerFailedCreate(char *path)
       if (f_write(&fpPowerFailed, &infoBreakPoint, sizeof(infoBreakPoint), &br) == FR_OK)
       {
         if (f_sync(&fpPowerFailed) == FR_OK)
-        {
           create_ok = true;
-        }
       }
     }
   }

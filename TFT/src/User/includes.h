@@ -64,7 +64,6 @@
 #include "ListManager.h"
 #include "Numpad.h"            // it uses infoSettings
 #include "ST7920_Emulator.h"   // it uses infoSettings
-#include "TouchProcess.h"
 #include "ui_draw.h"
 
 // User/API
@@ -80,28 +79,30 @@
 #include "FlashStore.h"
 #include "HomeOffsetControl.h"
 #include "HW_Init.h"
-#include "interfaceCmd.h"
 #include "LCD_Colors.h"
 #include "LCD_Dimming.h"
 #include "LED_Colors.h"
 #include "LED_Event.h"
 #include "LevelingControl.h"
 #include "MachineParameters.h"
+#include "Mainboard_AckHandler.h"
+#include "Mainboard_CmdControl.h"
+#include "Mainboard_CmdHandler.h"
+#include "Mainboard_FlowControl.h"
 #include "menu.h"
 #include "ModeSwitching.h"
 #include "Notification.h"
-#include "parseACK.h"
 #include "PowerFailed.h"
 #include "Printing.h"
 #include "ProbeHeightControl.h"
 #include "ProbeOffsetControl.h"
-#include "RRFStatusControl.h"
 #include "ScreenShot.h"
 #include "SerialConnection.h"
 #include "Settings.h"
 #include "SpeedControl.h"
 #include "Temperature.h"
 #include "Touch_Encoder.h"
+#include "Touch_Screen.h"
 
 // User/Menu
 #include "ABL.h"
