@@ -54,7 +54,7 @@ void ablUpdateStatus(bool succeeded)
   }
 }
 
-// Start ABL process
+// start ABL process
 void ablStart(void)
 {
   storeCmd("G28\n");
@@ -84,7 +84,7 @@ void ablStart(void)
     storeCmd("M118 P0 ABL Completed\n");
 }
 
-void ublSaveloadConfirm(void)
+static void ublSaveloadConfirm(void)
 {
   if (!ublIsSaving)
     storeCmd("G29 L%d\n", ublSlot);
@@ -92,7 +92,7 @@ void ublSaveloadConfirm(void)
     ublSlotSaved = storeCmd("G29 S%d\n", ublSlot);
 }
 
-void menuUBLSaveLoad(void)
+static void menuUBLSaveLoad(void)
 {
   MENUITEMS UBLSaveLoadItems = {
     // title

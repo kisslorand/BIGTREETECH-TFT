@@ -91,9 +91,6 @@ void heatSetCurrentTemp(uint8_t index, const int16_t temp)
     return;
 
   heater.T[index].current = NOBEYOND(-99, temp, 999);
-
-  if (infoMachineSettings.autoReportTemp)
-    heatSetNextUpdateTime();  // set next timeout for temperature auto-report
 }
 
 int16_t heatGetCurrentTemp(uint8_t index)
@@ -160,6 +157,7 @@ bool heatSetTool(const uint8_t toolIndex)
   if (storeCmd("%s\n", toolChange[toolIndex]))
   {
     heater.toolIndex = toolIndex;
+
     return true;
   }
 

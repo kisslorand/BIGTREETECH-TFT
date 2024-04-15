@@ -1,7 +1,7 @@
 #include "os_timer.h"
 #include "includes.h"
 
-OS_COUNTER os_counter = {0, 0};
+OS_COUNTER os_counter = {0, 1000};
 
 void OS_InitTimerMs(void)
 {
@@ -40,15 +40,15 @@ void TIMER6_IRQHandler(void)
     TIMER_INTF(TIMER6) &= ~TIMER_INTF_UPIF;  // clear interrupt flag
 
     os_counter.ms++;
-    os_counter.sec++;
+    os_counter.sec--;
 
-    if (os_counter.sec >= 1000)  // if one second has been elapsed
+    if (os_counter.sec == 0)  // if one second has been elapsed
     {
-      os_counter.sec = 0;  // reset one second counter
+      os_counter.sec = 1000;  // reset one second counter
 
-      AVG_KPIS();          // collect debug monitoring KPI
+      AVG_KPIS();             // collect debug monitoring KPI
 
-      updatePrintTime();   // if printing, update printing info
+      updatePrintTime();      // if printing, update printing info
     }
 
     TS_CheckPress();  // check touch screen once a millisecond
@@ -62,15 +62,15 @@ void TIM7_IRQHandler(void)
     TIM7->SR &= ~TIM_SR_UIF;  // clear interrupt flag
 
     os_counter.ms++;
-    os_counter.sec++;
+    os_counter.sec--;
 
-    if (os_counter.sec >= 1000)  // if one second has been elapsed
+    if (os_counter.sec == 0)  // if one second has been elapsed
     {
-      os_counter.sec = 0;  // reset one second counter
+      os_counter.sec = 1000;  // reset one second counter
 
-      AVG_KPIS();          // collect debug monitoring KPI
+      AVG_KPIS();             // collect debug monitoring KPI
 
-      updatePrintTime();   // if printing, update printing info
+      updatePrintTime();      // if printing, update printing info
     }
 
     TS_CheckPress();  // check touch screen once a millisecond
@@ -81,14 +81,14 @@ void TIM7_IRQHandler(void)
 // task: task structure to be filled
 // time_ms:
 //
-void OS_TaskInit(OS_TASK *task_t, uint32_t time_ms, FP_TASK function, void *para)
+void OS_TaskInit(OS_TASK * task_t, uint32_t time_ms, FP_TASK function, void * para)
 {
   task_t->time_ms = time_ms;
   task_t->task = function;
   task_t->para = para;
 }
 
-void OS_TaskLoop(OS_TASK *task_t)
+void OS_TaskLoop(OS_TASK * task_t)
 {
   if (task_t->is_exist == 0)
     return;
@@ -108,7 +108,7 @@ void OS_TaskLoop(OS_TASK *task_t)
   (*task_t->task)(task_t->para);
 }
 
-void OS_TaskEnable(OS_TASK *task_t, uint8_t is_exec, uint8_t is_repeat)
+void OS_TaskEnable(OS_TASK * task_t, uint8_t is_exec, uint8_t is_repeat)
 {
   task_t->is_exist =1;
   task_t->is_repeat = is_repeat;
@@ -118,7 +118,7 @@ void OS_TaskEnable(OS_TASK *task_t, uint8_t is_exec, uint8_t is_repeat)
     (*task_t->task)(task_t->para);
 }
 
-void OS_TaskDisable(OS_TASK *task_t)
+void OS_TaskDisable(OS_TASK * task_t)
 {
   task_t->is_exist = 0;
 }

@@ -13,7 +13,7 @@ extern "C" {
 #include "ui_draw.h"
 
 // check size of settings against max allocated size at compile time
-#define SIZE_CHECK(object) ((void)sizeof(char[1 - 2*!!(object)]))
+#define SIZE_CHECK(object) ((void)sizeof(char[1 - 2 * !!(object)]))
 
 #if CONFIG_VERSION != CONFIG_SUPPPORT
   #error "the Configuration.h is old. please use the latest Configuration.h file"
@@ -56,8 +56,8 @@ extern "C" {
     #ifdef DEFAULT_MODE
       #undef DEFAULT_MODE
     #endif
-    #define DEFAULT_MODE 1  // Just set hardcoded here.
-    //#warning "DEFAULT_MODE supports only Touch Mode. Please update/check your configuration."
+    #define DEFAULT_MODE 1  // just set hardcoded here
+    //#warning "DEFAULT_MODE supports only Touch Mode. Please update/check your configuration"
   #endif
 #endif
 
@@ -227,13 +227,13 @@ extern "C" {
                               ENABLE_CUSTOM_5,  ENABLE_CUSTOM_6,  ENABLE_CUSTOM_7,  ENABLE_CUSTOM_8,  ENABLE_CUSTOM_9,\
                               ENABLE_CUSTOM_10, ENABLE_CUSTOM_11, ENABLE_CUSTOM_12, ENABLE_CUSTOM_13, ENABLE_CUSTOM_14}
 
-#define CUSTOM_GCODE_LIST    {CUSTOM_GCODE_0,  CUSTOM_GCODE_1,  CUSTOM_GCODE_2,  CUSTOM_GCODE_3,  CUSTOM_GCODE_4,\
-                              CUSTOM_GCODE_5,  CUSTOM_GCODE_6,  CUSTOM_GCODE_7,  CUSTOM_GCODE_8,  CUSTOM_GCODE_9,\
-                              CUSTOM_GCODE_10, CUSTOM_GCODE_11, CUSTOM_GCODE_12, CUSTOM_GCODE_13, CUSTOM_GCODE_14}
-
 #define CUSTOM_GCODE_LABELS  {CUSTOM_LABEL_0,  CUSTOM_LABEL_1,  CUSTOM_LABEL_2,  CUSTOM_LABEL_3,  CUSTOM_LABEL_4,\
                               CUSTOM_LABEL_5,  CUSTOM_LABEL_6,  CUSTOM_LABEL_7,  CUSTOM_LABEL_8,  CUSTOM_LABEL_9,\
                               CUSTOM_LABEL_10, CUSTOM_LABEL_11, CUSTOM_LABEL_12, CUSTOM_LABEL_13, CUSTOM_LABEL_14}
+
+#define CUSTOM_GCODE_LIST    {CUSTOM_GCODE_0,  CUSTOM_GCODE_1,  CUSTOM_GCODE_2,  CUSTOM_GCODE_3,  CUSTOM_GCODE_4,\
+                              CUSTOM_GCODE_5,  CUSTOM_GCODE_6,  CUSTOM_GCODE_7,  CUSTOM_GCODE_8,  CUSTOM_GCODE_9,\
+                              CUSTOM_GCODE_10, CUSTOM_GCODE_11, CUSTOM_GCODE_12, CUSTOM_GCODE_13, CUSTOM_GCODE_14}
 
 //====================================================================================================
 //============================ Settings Configurable At Compile Time Only ============================
@@ -335,7 +335,7 @@ extern "C" {
 
 #if THUMBNAIL_PARSER == PARSER_BASE64PNG
   #if RAM_SIZE < 96
-    // Decoding Base64-encoded PNGs is not possible due to memory requirements. Downgrading to the "RGB565 bitmap" option.
+    // decoding Base64-encoded PNGs is not possible due to memory requirements. Downgrading to the "RGB565 bitmap" option
     #undef THUMBNAIL_PARSER
     #define THUMBNAIL_PARSER PARSER_RGB565
   #endif
